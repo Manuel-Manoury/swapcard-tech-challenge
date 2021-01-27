@@ -1,0 +1,25 @@
+{
+  "name": "swapcard-tech-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Manuel-Manoury/swapcard-tech-challenge.git",
+  "author": "Manuel Manoury <m.manoury@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "serve ./out"
+  },
+  "dependencies": {
+    "next": "^10.0.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "serve": "^11.3.2"
+  },
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "^1.1.0",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "typescript": "^4.1.3"
+  }
+}
