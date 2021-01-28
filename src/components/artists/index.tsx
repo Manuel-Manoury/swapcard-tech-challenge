@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import { Vertical } from '../layout/container'
@@ -23,14 +24,25 @@ const StyledArtistCard = styled(Vertical)`
     border-radius: 8px;
   }
 
-  &:hover ${BlurredImg} {
-    transform: scale(1.05);
+  &:hover {
+    cursor: pointer;
+
+    ${BlurredImg} {
+      transform: scale(1.05);
+    }
   }
 `;
 
 const ArtistCard = ({ name, id }) => {
+  const router = useRouter()
+  
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push(`/artist/${id}`);
+  }
+
   return (
-    <StyledArtistCard>
+    <StyledArtistCard onClick={handleClick}>
       <BlurredImg src={`https://picsum.photos/seed/${id}/200/200`} />
       <img src={`https://picsum.photos/seed/${id}/200/200`} />
       {name}
