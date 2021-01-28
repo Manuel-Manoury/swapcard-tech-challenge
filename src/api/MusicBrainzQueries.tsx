@@ -4,9 +4,18 @@ export const queryArtist = (artist) => gql`
   {
     search {
       artists(query: "${artist}") {
-        nodes {
-          name
-          mbid
+        edges {
+          node {
+            name
+            mbid
+            id
+          }
+          cursor
+        }
+        totalCount
+        pageInfo {
+          startCursor
+          endCursor
         }
       }
     }
