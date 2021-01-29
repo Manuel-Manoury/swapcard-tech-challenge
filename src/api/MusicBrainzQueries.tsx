@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
-export const queryArtist = (artist) => gql`
-  {
+export const queryArtist = gql`
+  query GetArtist($searchedArtist: String!, $amount: Int!, $lastItemCursor: String!) {
     search {
-      artists(query: "${artist}", first: 15) {
+      artists(query: $searchedArtist, first: $amount, after: $lastItemCursor) {
         edges {
           node {
             name
