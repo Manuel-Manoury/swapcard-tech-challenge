@@ -1,4 +1,8 @@
-const Cross = ({ size = 24 }) => {
+type CrossType = {
+  size?: number;
+};
+
+const Cross : React.FC<CrossType> = ({ size = 24 }) => {
   return (
     <svg 
       height={size} 

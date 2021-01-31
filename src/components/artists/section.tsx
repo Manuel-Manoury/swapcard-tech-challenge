@@ -25,7 +25,11 @@ const SectionTitle = styled.h2`
   }
 `;
 
-const SectionContent = styled.div`
+type SectionContentType = {
+  isCollapsed: boolean;
+};
+
+const SectionContent = styled.div<SectionContentType>`
   max-height: 1000%;
   transition: 500ms max-height ease-in-out;
   margin-bottom: 16px;
@@ -39,24 +43,26 @@ const SectionContent = styled.div`
   `};
 `;
 
-const ArtistSection = ({ title, children, collapsed = false }) => {
+type ArtistSectionType = {
+  title: string;
+  collapsed?: boolean;
+  children: JSX.Element;
+};
+
+const ArtistSection : React.FC<ArtistSectionType> = ({ title, children, collapsed = false }) => {
   const [isCollapsed, setIsCollapsed] = useState(collapsed);
 
   const handleToggleCollapsed = () => setIsCollapsed(!isCollapsed);
 
   return (
     <>
-      <SectionTitleContainer 
-        onClick={handleToggleCollapsed}
-      >
+      <SectionTitleContainer onClick={handleToggleCollapsed}>
         <SectionTitle>
           {title}
         </SectionTitle>
         <Sort rotation={isCollapsed ? 0 : -180} />
       </SectionTitleContainer>
-      <SectionContent 
-        isCollapsed={isCollapsed}
-      >
+      <SectionContent isCollapsed={isCollapsed}>
         {children}
       </SectionContent>
     </>

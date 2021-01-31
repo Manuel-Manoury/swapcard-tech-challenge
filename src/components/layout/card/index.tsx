@@ -55,10 +55,16 @@ const StyledCard = styled(Vertical)`
         box-shadow: 0px 8px 25px 0px rgba(200,200,200,0.75);
       }
     }
-  `}  
+  `};
 `;
 
-export const Card = ({ title, imgSrc, onClick = null }) => {
+type CardType = {
+  title: string;
+  imgSrc: string;
+  onClick?: (event : React.MouseEvent<HTMLDivElement | MouseEvent>) => void;
+};
+
+export const Card : React.FC<CardType> = ({ title, imgSrc, onClick = undefined }) => {
   return (
     <StyledCard onClick={onClick}>
       <BlurredImg src={imgSrc} />
@@ -70,7 +76,11 @@ export const Card = ({ title, imgSrc, onClick = null }) => {
   );
 };
 
-export const CardList = styled(Horizontal)`
+type CardListType = {
+  narrow?: boolean;
+};
+
+export const CardList = styled(Horizontal)<CardListType>`
   flex-wrap: wrap;
   margin: 0 -32px;
   padding: 24px;
@@ -81,5 +91,10 @@ export const CardList = styled(Horizontal)`
     margin: -4px;
     padding: 0;
     overflow: unset;
-  `}
+  `};
+
+  @media (max-width: 767px) {
+    padding: 0;
+    margin: 0 -16px;
+  }
 `;

@@ -35,4 +35,8 @@ export const PageContent = styled(Vertical)`
   height: 100%;
   width: 100%;
   background-color: #F2F2F2;
+
+  @media (max-width: 767px) {
+    padding: 24px;
+  }
 `;

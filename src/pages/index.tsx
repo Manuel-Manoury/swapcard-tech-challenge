@@ -12,8 +12,8 @@ import SearchInput from "../components/layout/input/search";
 const LOAD_MORE_STEP = 9;
 
 const HomePage = () => {
-  const [query, setQuery] = useState("")
-  const [searchedArtist, setSearchedArtist] = useState(query)
+  const [query, setQuery] = useState("");
+  const [searchedArtist, setSearchedArtist] = useState(query);
   const router = useRouter();
   const { loading, error, data, fetchMore, refetch } = useQuery(
     GET_ARTISTS, 
@@ -31,15 +31,15 @@ const HomePage = () => {
     setQuery('');
   }
 
-  const handleQueryChanged = (e) => {
+  const handleQueryChanged = (e : any) => {
     setQuery(e.target.value);
   };
 
   useEffect(() => {
-    let updateSearchArtistTimeout = setTimeout(() => setSearchedArtist(query), 500)
+    let updateSearchArtistTimeout = setTimeout(() => setSearchedArtist(query), 500);
 
     return () => clearTimeout(updateSearchArtistTimeout);
-  }, [query])
+  }, [query]);
 
   useEffect(() => {
     if (searchedArtist) {
@@ -47,10 +47,9 @@ const HomePage = () => {
         searchedArtist,
         amount: LOAD_MORE_STEP,
         lastItemCursor: ""
-      })
+      });
     }
-  }, [searchedArtist])
-
+  }, [searchedArtist]);
 
   if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error :(</p>;
@@ -63,14 +62,14 @@ const HomePage = () => {
           <p>Loading...</p>
         ) : (
           <CardList>
-            {data?.search?.artists?.edges?.map(({node}) => {
-              const handleClick = (e) => {
-                e.preventDefault()
+            {data?.search?.artists?.edges?.map(({ node } : any) => {
+              const handleClick = (e: any) => {
+                e.preventDefault();
                 router.push(`/artist/${node.mbid}`);
-              }
+              };
 
               return (
-                <Card 
+                <Card
                   title={node.name}
                   onClick={handleClick}
                   key={node.id} 
@@ -83,7 +82,11 @@ const HomePage = () => {
       }
       {
         data?.search?.artists?.pageInfo.hasNextPage && (
-          <button onClick={() => { fetchMore({ variables: { amount: LOAD_MORE_STEP, lastItemCursor: data?.search?.artists?.pageInfo.endCursor } }) }}>
+          <button
+            onClick={() => { 
+              fetchMore({ variables: { amount: LOAD_MORE_STEP, lastItemCursor: data?.search?.artists?.pageInfo.endCursor } });
+            }}
+          >
             Load more
           </button>
         )

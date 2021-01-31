@@ -47,7 +47,7 @@ const Favorites = () => {
       </h3>
       <hr />
       {
-        data?.map(({ name, id, imgSrc}) => {
+        data?.map(({ name, id }) => {
           const handleClick = () => {
             router.push(`/artist/${id}`);
           };
@@ -60,7 +60,7 @@ const Favorites = () => {
         })
       }
     </FavoritesContainer>
-  )
-}
+  );
+};
 
 export default Favorites;

@@ -42,9 +42,15 @@ const InputContainer = styled(Horizontal)`
   }
 `;
 
-const SearchInput = ({ type, value, onChange, placeholder, clearInput }) => {
+type SearchInputType = {
+  type: string;
+  value: string;
+  onChange: (e: any) => void;
+  placeholder: string;
+  clearInput: () => void;
+};
 
-
+const SearchInput : React.FC<SearchInputType> = ({ type, value, onChange, placeholder, clearInput }) => {
   return (
     <SearchInputContainer>
       <h3>

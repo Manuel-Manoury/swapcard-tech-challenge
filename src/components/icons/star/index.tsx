@@ -1,4 +1,9 @@
-const Star = ({ size = 24, color = "#ffc107"}) => {
+type StarType = {
+  size?: number;
+  color?: string;
+};
+
+const Star : React.FC<StarType> = ({ size = 24, color = "#ffc107"}) => {
   return (
     <svg 
       height={size} 

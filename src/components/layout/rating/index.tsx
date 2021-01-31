@@ -6,7 +6,12 @@ import { Horizontal, Vertical } from "../container";
 
 const STAR_SPACING = 4;
 
-const StarsContainer = styled(Horizontal)`
+type StarsContainerType = {
+  starSize: number;
+  rate?: number;
+};
+
+const StarsContainer = styled(Horizontal)<StarsContainerType>`
   z-index: 1;
   max-width: ${({ starSize }) => 5 * starSize + 4 * STAR_SPACING}px;
 
@@ -33,7 +38,13 @@ const RatingContainer = styled(Vertical)`
   margin: 8px 0;
 `;
 
-const Rating = ({ rate, starSize = 24, voteCount }) => {
+type RatingType = {
+  rate: number;
+  starSize?: number;
+  voteCount: number;
+};
+
+const Rating : React.FC<RatingType> = ({ rate, starSize = 24, voteCount }) => {
   const [currentRate, setCurrentRate] = useState(0);
 
   useEffect(() => {

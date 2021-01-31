@@ -9,16 +9,16 @@ const client = new ApolloClient({
           artists: {
             keyArgs: false,
             merge(existing = { edges: [] }, incoming, { args }) {
-              if (existing.__typename && existing.__typename === `${incoming.__typename}-${args.query}`)
+              if (existing.__typename && existing.__typename === `${incoming.__typename}-${args?.query}`)
                 return {
                   ...incoming,
                   edges: [...existing.edges, ...incoming.edges],
-                  __typename: `${incoming.__typename}-${args.query}`
+                  __typename: `${incoming.__typename}-${args?.query}`
                 };
 
               return {
                  ...incoming,
-                 __typename: `${incoming.__typename}-${args.query}`
+                 __typename: `${incoming.__typename}-${args?.query}`
               }
             },
           }

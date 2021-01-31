@@ -29,4 +29,12 @@ Okay, after a dinner break I came up with an idea for this infinite scroll thing
 It starts to piece up together pretty nicely. I implemented the "artist details" page, and reworked my naive approach to fetch details independantly from the artist, probably some old reflex I got from classical APIs. If I understood correctly, in GraphQL it's expected that you pull all the needed content starting from the node you're targeting, so it's what I implemented.
 I started a todo list on the side, to keep track of the ideas I have for the rest of the test, and to rank them by priorities, as I'm not 100% sure I'll be able to do everything (even though it's what I hope to achieve).
 After a good afternoon of focus, I managed to get some "favorite" mechanism and a decent artist details page.
-After diner, I managed to improve the UI quite a lot. It's far from perfect, but I wouldn't be disappointed if I can't change a lot of things before submitting this result.   
+After diner, I managed to improve the UI quite a lot. It's far from perfect, but I wouldn't be disappointed if I can't change a lot of things before submitting this result.
+
+# 31-01-2021 - Day 5
+We're starting to near the end of the time frame for this test. Today, I've decided to focus on finishing my app in its actual state in order to have a submit-able code, instead of trying to add more and more stuff without properly finishing everything.
+The first thing I want to tweak the "Favorite" feature in order to propose a clean UI to consider it done after the logic implemented yesterday.
+I also start to clean up my mess a bit, split components in smaller units and start to define a few constants for reusability.
+I added some finishing touches using Next.js `<Head>` API to make my app more like and app, and less like a local dev test.
+I tweak the overall UI to have a somewhat responsive app.
+I set TypeScript to `strict` in order to help me spot the missing types and improve my code quality.

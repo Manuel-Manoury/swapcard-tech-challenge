@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CARD_PICTURE_SIZE } from "../../styles/variables";
 
 import { Star } from "../icons";
-import { Horizontal, Vertical } from '../layout/container';
+import { Horizontal, Vertical } from "../layout/container";
 import Rating from "../layout/rating";
 
 const ArtistHeaderContainer = styled(Horizontal)`
@@ -15,16 +15,55 @@ const ArtistHeaderContainer = styled(Horizontal)`
     border-radius: 8px;
     margin-right: 32px;
   }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
-const ArtistHeader = ({ name, disambiguation, start, end, rate, voteCount, imgSrc, handleFavoriteClick }) => {
+const NameWrapper = styled(Horizontal)`
+  align-items: center;
+
+  & > div {
+    height: 100%;
+    margin-left: 16px;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    & > svg {
+      margin: auto;
+    }
+  }
+`;
+
+type ArtistHeaderType = {
+  name: string;
+  disambiguation: string;
+  start: string;
+  end: string;
+  rate: number;
+  voteCount: number;
+  imgSrc: string;
+  isFavorite: boolean;
+  handleFavoriteClick: (item : any) => void;
+};
+
+const ArtistHeader : React.FC<ArtistHeaderType> = ({ name, disambiguation, start, end, rate, voteCount, imgSrc, handleFavoriteClick, isFavorite }) => {
   return (
     <ArtistHeaderContainer>
       <img src={imgSrc} />
       <Vertical>
-        <h2>
-          {name}
-        </h2>
+        <NameWrapper>
+          <h2>
+            {name}
+          </h2>
+          <div onClick={handleFavoriteClick}>
+            <Star color={isFavorite ? '#ffc107' : '#CCCCCC'} />
+          </div>
+        </NameWrapper>
         <i>
           {disambiguation}
         </i>
@@ -32,9 +71,6 @@ const ArtistHeader = ({ name, disambiguation, start, end, rate, voteCount, imgSr
           {start} - {end}
         </p>
         <Rating rate={rate} voteCount={voteCount} />
-        <Horizontal>
-          <button onClick={handleFavoriteClick}>Add to favorites <Star /></button>
-        </Horizontal>
       </Vertical>
     </ArtistHeaderContainer>
   );

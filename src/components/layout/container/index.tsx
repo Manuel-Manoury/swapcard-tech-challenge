@@ -5,6 +5,11 @@ export const ContentContainer = styled.div`
   width: 100%;
   margin: auto;
   padding: 16px 32px;
+
+  @media (max-width: 767px) {
+    padding: 16px 20px;
+    height: 100%;
+  }
 `;
 
 export const Horizontal = styled.div`

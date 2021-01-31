@@ -13,16 +13,22 @@ const Header = styled.header`
     color: #F2F2F2;
     text-decoration: none;
   }
+
+  ${ContentContainer} {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
-const StyledHeader = ({ children }) => {
+const StyledHeader : React.FC<{}> = ({ children }) => {
   return (
     <Header>
       <ContentContainer>
         {children}
       </ContentContainer>
     </Header>
-  )
-}
+  );
+};
 
 export default StyledHeader;

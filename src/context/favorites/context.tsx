@@ -1,10 +1,20 @@
 import React from "react";
 
-const FavoritesContext = React.createContext({ 
+type FavoriteType = {
+  id: string;
+  name: string;
+};
+
+type FavoriteContextType = {
+  data: Array<FavoriteType>;
+  add: (item: FavoriteType) => void;
+  remove: (item: FavoriteType) => void;
+};
+
+const FavoritesContext = React.createContext<FavoriteContextType>({ 
   data: [], 
-  add: (_ : any) => {},
-  remove: (_ : any) => {},
-  find: (_: any) => ({}),
+  add: (_) => {},
+  remove: (_) => {},
 });
 
-export default FavoritesContext
+export default FavoritesContext;

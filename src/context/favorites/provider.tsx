@@ -2,19 +2,28 @@ import { useEffect, useState } from "react";
 
 import FavoriteContext from "./context";
 
-const FavoritesProvider = ({ children }) => {
-  const [storedFavorites, setStoredFavorites] = useState(null);
+type FavoriteType = {
+  id: string;
+  name: string;
+};
+
+const FavoritesProvider : React.FC<{}> = ({ children }) => {
+  const [storedFavorites, setStoredFavorites] = useState<Array<FavoriteType>>([]);
   const [shouldPersist, setShouldPersist] = useState(false);
 
-  const handleAddFavorite = (item) => setStoredFavorites([...storedFavorites, item]);
-  const handleFindFavorite = (item) => storedFavorites.find((storedFavorite) => storedFavorite.id === item.id);
-  const handleRemoveFavorite = (item) => {
-    const existingFavorite = handleFindFavorite(item);
+  const handleAddFavorite = (item : FavoriteType) => {
+    setShouldPersist(true);
+    setStoredFavorites([...storedFavorites, item]);
+  };
+
+  const handleRemoveFavorite = (item : FavoriteType) => {
+    const existingFavorite = storedFavorites.find((storedFavorite) => storedFavorite.id === item.id);
 
     if (existingFavorite) {
       let copiedFavorites = [...storedFavorites];
 
       copiedFavorites.splice(storedFavorites.indexOf(existingFavorite), 1);
+      setShouldPersist(true);
       setStoredFavorites(copiedFavorites);
     }
   };
@@ -30,11 +39,10 @@ const FavoritesProvider = ({ children }) => {
     const soundwarpFavorites = localStorageFavorites ? JSON.parse(localStorageFavorites) : []; 
 
     setStoredFavorites(soundwarpFavorites);
-    setShouldPersist(true);
   }, []);
 
   return (
-    <FavoriteContext.Provider value={{ data: storedFavorites, add: handleAddFavorite, remove: handleRemoveFavorite, find: handleFindFavorite }}>
+    <FavoriteContext.Provider value={{ data: storedFavorites, add: handleAddFavorite, remove: handleRemoveFavorite }}>
       {children}
     </FavoriteContext.Provider>
   );

@@ -1,4 +1,9 @@
-const Sort = ({ size = 24, rotation }) => {
+type SortType = {
+  size?: number;
+  rotation?: number;
+};
+
+const Sort : React.FC<SortType> = ({ size = 24, rotation = 0 }) => {
   return (
     <svg 
       height={size} 

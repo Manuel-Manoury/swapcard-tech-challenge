@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
 import Head from "next/head";
 import styled from "styled-components";
 
@@ -19,28 +18,33 @@ const PageContainer = styled(Vertical)`
   overflow-x: hidden;
 `;
 
-const ArtistPage = () => {
-  const router = useRouter()
-  const { artistId } = router.query
-  const { loading, error, data } = useQuery(GET_ARTIST_DETAILS, { variables: { searchedArtistId: artistId } });
-  const { add : addFavorite, remove: removeFavorite, find: findFavorite } = useContext(FavoritesContext)
+type ArtistPageType = {
+  artistId: string;
+};
 
-  if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error :(</p>;
+const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
+  const { loading, error, data } = useQuery(GET_ARTIST_DETAILS, { variables: { searchedArtistId: artistId } });
+  const { data: favoriteData, add : addFavorite, remove: removeFavorite } = useContext(FavoritesContext);
+
+  const isFavorite = () => {
+    return !!favoriteData.find((favorite) => favorite.id === artistId);
+  };
 
   const handleFavoriteClick = () => {
     const favoriteItem = {
       id: artistId,
-      imgSrc: data?.lookup?.artist?.mediaWikiImages[0]?.url || `https://picsum.photos/seed/${artistId}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`,
       name: data?.lookup?.artist?.name
     };
 
-    if (findFavorite(favoriteItem)) {
+    if (isFavorite()) {
       removeFavorite(favoriteItem);
     } else {
       addFavorite(favoriteItem);
     }
-  }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error :(</p>;
 
   return (
     <PageContainer>
@@ -58,6 +62,7 @@ const ArtistPage = () => {
         rate={data?.lookup?.artist?.rating?.value || 0}
         voteCount={data?.lookup?.artist?.rating?.voteCount}
         handleFavoriteClick={handleFavoriteClick}
+        isFavorite={isFavorite()}
       />
       <ArtistSection title="Abstract">
         <p style={{ padding: '0 16px' }}>
@@ -66,17 +71,11 @@ const ArtistPage = () => {
       </ArtistSection>
       <ArtistSection title="Records">
         <CardList narrow>
-          {data?.lookup?.artist?.releaseGroups?.nodes?.map((node) => { 
-            // const handleClick = (e) => {
-            //   e.preventDefault()
-            //   router.push(`/artist/${artistId}/album/${node.mbid}`);
-            // }
-
+          {data?.lookup?.artist?.releaseGroups?.nodes?.map((node : any) => { 
             return (
               <Card 
                 title={node.title} 
                 key={node.id} 
-                // onClick={handleClick}
                 imgSrc={node.coverArtArchive.front || `https://picsum.photos/seed/${node.mbid}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`} 
               />
             )
@@ -93,11 +92,11 @@ export const getStaticPaths = () => {
   return {
     paths : [],
     fallback: true  
-  }
-}
+  };
+};
 
-export const getStaticProps = ({ params }) => {
+export const getStaticProps = ({ params } : any) => {
   return {
     props: { artistId: params.artistId }
-  }
-}
+  };
+};

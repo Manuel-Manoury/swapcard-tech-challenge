@@ -22,7 +22,7 @@ export const GET_ARTISTS = gql`
       }
     }
   }
-`
+`;
 
 export const GET_ARTIST_DETAILS = gql`
   query GetArtistDetails($searchedArtistId: MBID!) {
@@ -60,4 +60,4 @@ export const GET_ARTIST_DETAILS = gql`
       }
     }
   }
-`
+`;

@@ -1,4 +1,8 @@
-const Magnifier = ({ size = 32 }) => {
+type MagnifierType = {
+  size?: number;
+};
+
+const Magnifier : React.FC<MagnifierType> = ({ size = 32 }) => {
   return (
     <svg 
       version="1.1" 
