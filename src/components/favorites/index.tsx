@@ -23,7 +23,7 @@ const FavoritesContainer = styled(Vertical)`
 const FavoriteItem = styled.div`
   padding: 4px 16px;
   border-radius: 4px;
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  transition: background-color 500ms ease-in-out, color 500ms ease-in-out;
 
   &:hover {
     background-color: #212121;

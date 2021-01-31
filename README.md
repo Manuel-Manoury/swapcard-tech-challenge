@@ -3,7 +3,7 @@
 Online version : https://agitated-wright-72c6ef.netlify.app/
 
 # What could be improved ?
-*The UI*. It's a bit cold even though I went for something clean, the fact that I tend to use pure "mathematical" color shades instead of tinted ones tend to make the whole interface less warm and welcoming than what I could be.
+*The UI*. It's a bit cold even though I went for something clean, the fact that I tend to use pure "mathematical" color shades instead of tinted ones tend to make the whole interface less warm and welcoming than what I could be. Also some animation might use a bit of tweaking to make them smoother.
 
 *Images*. I didn't optimize their sizing / loading, consequently some are a bit long to load, some are a bit stretched and so on.
 

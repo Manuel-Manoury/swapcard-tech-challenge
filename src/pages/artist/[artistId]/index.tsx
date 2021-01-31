@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import styled from "styled-components";
 
 import FavoritesContext from "../../../context/favorites/context";
 
@@ -11,6 +12,12 @@ import { GET_ARTIST_DETAILS } from "../../../api/MusicBrainzQueries";
 
 import { ArtistHeader, ArtistSection } from "../../../components/artists";
 import { Card, CardList } from "../../../components/layout/card";
+import { Vertical } from "../../../components/layout/container";
+
+const PageContainer = styled(Vertical)`
+  height: 100%;
+  overflow-x: hidden;
+`;
 
 const ArtistPage = () => {
   const router = useRouter()
@@ -36,7 +43,7 @@ const ArtistPage = () => {
   }
 
   return (
-    <div>
+    <PageContainer>
       <Head>
         <title>
           soundwarp - {data?.lookup?.artist?.name}
@@ -48,35 +55,35 @@ const ArtistPage = () => {
         disambiguation={data?.lookup?.artist?.disambiguation}
         start={data?.lookup?.artist?.lifeSpan?.begin}
         end={data?.lookup?.artist?.lifeSpan?.end || "today"}
-        rating={data?.lookup?.artist?.rating?.value || 0}
-        ratingCount={data?.lookup?.artist?.rating?.voteCount}
+        rate={data?.lookup?.artist?.rating?.value || 0}
+        voteCount={data?.lookup?.artist?.rating?.voteCount}
         handleFavoriteClick={handleFavoriteClick}
       />
       <ArtistSection title="Abstract">
-        <div>
+        <p style={{ padding: '0 16px' }}>
           {data?.lookup?.artist?.discogs?.profile}
-        </div>
+        </p>
       </ArtistSection>
       <ArtistSection title="Records">
-        <CardList>
+        <CardList narrow>
           {data?.lookup?.artist?.releaseGroups?.nodes?.map((node) => { 
-            const handleClick = (e) => {
-              e.preventDefault()
-              router.push(`/artist/${artistId}/album/${node.mbid}`);
-            }
+            // const handleClick = (e) => {
+            //   e.preventDefault()
+            //   router.push(`/artist/${artistId}/album/${node.mbid}`);
+            // }
 
             return (
               <Card 
                 title={node.title} 
                 key={node.id} 
-                onClick={handleClick}
+                // onClick={handleClick}
                 imgSrc={node.coverArtArchive.front || `https://picsum.photos/seed/${node.mbid}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`} 
               />
             )
           })}
         </CardList>
       </ArtistSection>
-    </div>
+    </PageContainer>
   );
 };
 

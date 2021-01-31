@@ -20,7 +20,7 @@ const BlurredImg = styled.img`
   z-index: 1;
   width: ${CARD_PICTURE_SIZE}px;
   height: ${CARD_PICTURE_SIZE}px;
-  transition: transform 300ms ease-in-out;
+  transition: transform 500ms ease-in-out;
 `;
 
 const TitleContainer = styled.div`
@@ -32,7 +32,7 @@ const TitleContainer = styled.div`
   border-bottom: 1px solid silver;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  transition: box-shadow 300ms ease-in-out;
+  transition: box-shadow 500ms ease-in-out;
 `;
 
 const StyledCard = styled(Vertical)`
@@ -58,7 +58,7 @@ const StyledCard = styled(Vertical)`
   `}  
 `;
 
-export const Card = ({ title, imgSrc, onClick }) => {
+export const Card = ({ title, imgSrc, onClick = null }) => {
   return (
     <StyledCard onClick={onClick}>
       <BlurredImg src={imgSrc} />
@@ -72,5 +72,14 @@ export const Card = ({ title, imgSrc, onClick }) => {
 
 export const CardList = styled(Horizontal)`
   flex-wrap: wrap;
-  margin: 0 -16px;
+  margin: 0 -32px;
+  padding: 24px;
+  height: 100%;
+  overflow: auto;
+
+  ${({ narrow }) => narrow && css`
+    margin: -4px;
+    padding: 0;
+    overflow: unset;
+  `}
 `;

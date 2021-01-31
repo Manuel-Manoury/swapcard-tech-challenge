@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 import { CARD_PICTURE_SIZE } from "../../styles/variables";
 
+import { Star } from "../icons";
 import { Horizontal, Vertical } from '../layout/container';
+import Rating from "../layout/rating";
 
 const ArtistHeaderContainer = styled(Horizontal)`
   margin-bottom: 32px;
@@ -15,27 +17,23 @@ const ArtistHeaderContainer = styled(Horizontal)`
   }
 `;
 
-const ArtistHeader = ({ name, disambiguation, start, end, rating, ratingCount, imgSrc, handleFavoriteClick }) => {
+const ArtistHeader = ({ name, disambiguation, start, end, rate, voteCount, imgSrc, handleFavoriteClick }) => {
   return (
     <ArtistHeaderContainer>
       <img src={imgSrc} />
       <Vertical>
-        <div>
+        <h2>
           {name}
-        </div>
-        <div>
-          <i>
-            {disambiguation}
-          </i>
-        </div>
-        <div>
+        </h2>
+        <i>
+          {disambiguation}
+        </i>
+        <p>
           {start} - {end}
-        </div>
-        <div>
-          {rating} / 5 ({ratingCount} votes)
-        </div>
+        </p>
+        <Rating rate={rate} voteCount={voteCount} />
         <Horizontal>
-          <button onClick={handleFavoriteClick}>Add to favorites</button>
+          <button onClick={handleFavoriteClick}>Add to favorites <Star /></button>
         </Horizontal>
       </Vertical>
     </ArtistHeaderContainer>
