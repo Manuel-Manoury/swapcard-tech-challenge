@@ -1,11 +1,11 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: 'https://graphbrainz.herokuapp.com',
+  uri: "https://graphbrainz.herokuapp.com",
   cache: new InMemoryCache({
     typePolicies: {
       SearchQuery: {
-        fields : {
+        fields: {
           artists: {
             keyArgs: false,
             merge(existing = { edges: [] }, incoming, { args }) {
@@ -24,6 +24,14 @@ const client = new ApolloClient({
           }
         },
       },
+      LookupQuery: {
+        fields: {
+          artist: {
+            keyArgs: ["mbid"],
+            merge: false
+          }
+        }
+      }
     },
   })
 });

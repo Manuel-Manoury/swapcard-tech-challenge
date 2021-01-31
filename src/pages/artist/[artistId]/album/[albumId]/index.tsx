@@ -14,8 +14,6 @@ export const getStaticPaths = () => {
 }
 
 export const getStaticProps = ({ params }) => {
-  console.log(params);
-
   return {
     props: { albumId: params.albumId }
   }

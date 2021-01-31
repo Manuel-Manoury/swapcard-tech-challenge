@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const Container = styled.div`
+export const ContentContainer = styled.div`
   max-width: 1200px;
+  width: 100%;
   margin: auto;
   padding: 16px 32px;
 `;
@@ -15,5 +16,3 @@ export const Vertical = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-export default Container;
