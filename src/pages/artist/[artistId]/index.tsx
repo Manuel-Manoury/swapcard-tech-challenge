@@ -12,6 +12,7 @@ import { GET_ARTIST_DETAILS } from "../../../api/MusicBrainzQueries";
 import { ArtistHeader, ArtistSection } from "../../../components/artists";
 import { Card, CardList } from "../../../components/layout/card";
 import { Vertical } from "../../../components/layout/container";
+import Loading from "../../../components/layout/loading";
 
 const PageContainer = styled(Vertical)`
   height: 100%;
@@ -43,7 +44,7 @@ const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   // if (error) return <p>Error :(</p>;
 
   return (

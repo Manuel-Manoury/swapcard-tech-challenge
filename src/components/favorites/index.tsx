@@ -7,6 +7,8 @@ import FavoritesContext from "../../context/favorites/context";
 import { Vertical } from "../layout/container";
 
 const FavoritesContainer = styled(Vertical)`
+  max-height: 100%;
+
   h3 {
     margin: 0;
     text-align: center;
@@ -20,10 +22,17 @@ const FavoritesContainer = styled(Vertical)`
   }
 `;
 
+const FavoriteItemsContainer = styled(Vertical)`
+  overflow: auto;
+`;
+
 const FavoriteItem = styled.div`
   padding: 4px 16px;
   border-radius: 4px;
   transition: background-color 500ms ease-in-out, color 500ms ease-in-out;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 
   &:hover {
     background-color: #212121;
@@ -46,19 +55,21 @@ const Favorites = () => {
         Favorites
       </h3>
       <hr />
-      {
-        data?.map(({ name, id }) => {
-          const handleClick = () => {
-            router.push(`/artist/${id}`);
-          };
+      <FavoriteItemsContainer>
+        {
+          data?.map(({ name, id }) => {
+            const handleClick = () => {
+              router.push(`/artist/${id}`);
+            };
 
-          return (
-            <FavoriteItem key={id} onClick={handleClick}>
-              {name}
-            </FavoriteItem>
-          )
-        })
-      }
+            return (
+              <FavoriteItem key={id} onClick={handleClick}>
+                {name}
+              </FavoriteItem>
+            )
+          })
+        }
+      </FavoriteItemsContainer>
     </FavoritesContainer>
   );
 };

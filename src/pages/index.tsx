@@ -6,13 +6,17 @@ import { CARD_PICTURE_SIZE } from "../styles/variables";
 
 import { GET_ARTISTS } from "../api/MusicBrainzQueries";
 
-import { Card, CardList } from "../components/layout/card";
+import { Card } from "../components/layout/card";
 import SearchInput from "../components/layout/input/search";
+import Loading from "../components/layout/loading";
+import InfiniteScroll from "../components/layout/infinite-scroll";
 
 const LOAD_MORE_STEP = 9;
 
 const HomePage = () => {
   const [query, setQuery] = useState("");
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [contentChanged, setContentChanged] = useState(false);
   const [searchedArtist, setSearchedArtist] = useState(query);
   const router = useRouter();
   const { loading, error, data, fetchMore, refetch } = useQuery(
@@ -35,6 +39,13 @@ const HomePage = () => {
     setQuery(e.target.value);
   };
 
+  const loadMore = () => { 
+    if (data?.search?.artists?.pageInfo.hasNextPage && !isLoadingMore) {
+      setIsLoadingMore(true);
+      fetchMore({ variables: { amount: LOAD_MORE_STEP, lastItemCursor: data?.search?.artists?.pageInfo.endCursor } });
+    }
+  };
+
   useEffect(() => {
     let updateSearchArtistTimeout = setTimeout(() => setSearchedArtist(query), 500);
 
@@ -43,6 +54,8 @@ const HomePage = () => {
 
   useEffect(() => {
     if (searchedArtist) {
+      // console.log('search changed', contentChanged);
+      setContentChanged(true);
       refetch({
         searchedArtist,
         amount: LOAD_MORE_STEP,
@@ -51,7 +64,14 @@ const HomePage = () => {
     }
   }, [searchedArtist]);
 
-  if (loading) return <p>Loading...</p>;
+  useEffect(() => {
+    // if (!loading && data) {
+      // console.log('data changed', contentChanged);
+      setIsLoadingMore(false);
+      // setContentChanged(false);
+    // }
+  }, [loading, data]);
+
   // if (error) return <p>Error :(</p>;
 
   return (
@@ -59,9 +79,9 @@ const HomePage = () => {
       <SearchInput type="text" onChange={handleQueryChanged} value={query} clearInput={clearInput} placeholder="Search an artist..." />
       {
         loading ? (
-          <p>Loading...</p>
+          <Loading />
         ) : (
-          <CardList>
+          <InfiniteScroll loadMore={loadMore} isLoadingMore={isLoadingMore} contentChanged={contentChanged}>
             {data?.search?.artists?.edges?.map(({ node } : any) => {
               const handleClick = (e: any) => {
                 e.preventDefault();
@@ -77,20 +97,9 @@ const HomePage = () => {
                 />
               );
             })}
-          </CardList>
+          </InfiniteScroll>
         )
       }
-      {
-        data?.search?.artists?.pageInfo.hasNextPage && (
-          <button
-            onClick={() => { 
-              fetchMore({ variables: { amount: LOAD_MORE_STEP, lastItemCursor: data?.search?.artists?.pageInfo.endCursor } });
-            }}
-          >
-            Load more
-          </button>
-        )
-      } 
     </>
   );
 };
