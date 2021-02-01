@@ -10,6 +10,7 @@ const FrontImg = styled.img`
   height: ${CARD_PICTURE_SIZE}px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  background-color: #CCCCCC;
 `;
 
 const BlurredImg = styled.img`
