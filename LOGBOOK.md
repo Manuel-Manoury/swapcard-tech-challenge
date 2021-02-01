@@ -42,3 +42,5 @@ I set TypeScript to `strict` in order to help me spot the missing types and impr
 # 01-02-2021 - Day 6
 It's nearing the end of the test, today should be about the finishing touches to my app more than anything else. It's not perfect, and won't ever be, but I must ship something clean.
 I have implemented the actual infinite scroll, as well as a cleaner "loading" message. I still have some UI/UX issues, but we're getting there.
+I've successfully tweaked my infinite scroll to behave as I want, removing most data conflit I could think of.
+I found an artist for which there is absolutely no provided Profile for its "abstract" section, I didn't think it would happen, but still, I'm glad I found it to think about setting a default message.

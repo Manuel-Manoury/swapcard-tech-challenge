@@ -58,7 +58,7 @@ const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
         imgSrc={data?.lookup?.artist?.mediaWikiImages[0]?.url || `https://picsum.photos/seed/${artistId}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`}
         name={data?.lookup?.artist?.name}
         disambiguation={data?.lookup?.artist?.disambiguation}
-        start={data?.lookup?.artist?.lifeSpan?.begin}
+        start={data?.lookup?.artist?.lifeSpan?.begin || "unknown"}
         end={data?.lookup?.artist?.lifeSpan?.end || "today"}
         rate={data?.lookup?.artist?.rating?.value || 0}
         voteCount={data?.lookup?.artist?.rating?.voteCount}
@@ -67,20 +67,24 @@ const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
       />
       <ArtistSection title="Abstract">
         <p style={{ padding: "0 16px" }}>
-          {data?.lookup?.artist?.discogs?.profile}
+          {data?.lookup?.artist?.discogs?.profile || <i>No data found</i>}
         </p>
       </ArtistSection>
       <ArtistSection title="Records">
         <CardList narrow>
-          {data?.lookup?.artist?.releaseGroups?.nodes?.map((node : any) => { 
-            return (
-              <Card 
-                title={node.title} 
-                key={node.id} 
-                imgSrc={node.coverArtArchive.front || `https://picsum.photos/seed/${node.mbid}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`} 
-              />
-            )
-          })}
+          {data?.lookup?.artist?.releaseGroups?.nodes?.length ? (
+            data?.lookup?.artist?.releaseGroups?.nodes?.map((node : any) => { 
+              return (
+                <Card
+                  title={node.title}
+                  key={node.id}
+                  imgSrc={node.coverArtArchive.front || `https://picsum.photos/seed/${node.mbid}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`}
+                />
+              )
+            })
+          ) : (
+            <i style={{ padding: "20px" }}>No data found</i>
+          )}
         </CardList>
       </ArtistSection>
     </PageContainer>

@@ -8,6 +8,7 @@ import "../styles/main.css";
 import MusicBrainzClient from "../api/MusicBrainzClient";
 
 import FavoritesProvider from "../context/favorites/provider";
+import QueryProvider from "../context/query/provider";
 
 import Header from "../components/layout/header";
 import Sidebar from "../components/layout/sidebar";
@@ -25,30 +26,32 @@ const Layout : React.FC<LayoutType> = ({ Component, pageProps }) => {
 
   return (
     <ApolloProvider client={MusicBrainzClient}>
-      <FavoritesProvider>
-        <Head>
-          <title>soundwarp</title>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        </Head>
-        <Header>
-          <ToggleButton setMenuDisplayed={setMenuDisplayed} menuDisplayed={menuDisplayed} />
-          <Link href="/">
-            <a>soundwarp</a>
-          </Link>
-        </Header>
-        <PageLayout>
-          <PageContainer>
-            <Sidebar shown={menuDisplayed}>
-              <Favorites />
-            </Sidebar>
-            <PageContent>
-              <Component {...pageProps} />
-            </PageContent>
-          </PageContainer>
-        </PageLayout>
-      </FavoritesProvider>
+      <QueryProvider>
+        <FavoritesProvider>
+          <Head>
+            <title>soundwarp</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          </Head>
+          <Header>
+            <ToggleButton setMenuDisplayed={setMenuDisplayed} menuDisplayed={menuDisplayed} />
+            <Link href="/">
+              <a>soundwarp</a>
+            </Link>
+          </Header>
+          <PageLayout>
+            <PageContainer>
+              <Sidebar shown={menuDisplayed}>
+                <Favorites />
+              </Sidebar>
+              <PageContent>
+                <Component {...pageProps} />
+              </PageContent>
+            </PageContainer>
+          </PageLayout>
+        </FavoritesProvider>
+      </QueryProvider>
     </ApolloProvider>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

@@ -31,6 +31,4 @@ query GetRecords($releaseGroupMBID: MBID!, $amount: Int!, $lastItemCursor: Strin
 ```
 With such a query, I end up facing the `The given parameters do not match any available query type for the release resource.` error message, even though I can't understand why it doesn't work, considering it seems to be working fine on the MusicBrainz website.
 
-**Infinite Scroll**. For some reason, I can't seem to find a way to cancel pending requests when they are emitted through the `hook` Apollo provides. As a result, I cannot cancel a "loadmore" request if in the meantime the user decides to change the searched artist, resulting in a weird behavior (the list for artist A, waiting to be completed is replaced by the list for the new artist B, which is then replaced by the missing part from A). Also, if I avoid this problem, I have another one : if we search for A, scroll, then search for B, the `loading` flag doesn't seem to be updated, and the scroll position isn't reset.
-
 **Error messages**. I didn't use the error provided by Apollo, and that's clearly taking a risk from both an application and a UX perspective.

@@ -1,10 +1,12 @@
 import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { CARD_PICTURE_SIZE } from "../styles/variables";
 
 import { GET_ARTISTS } from "../api/MusicBrainzQueries";
+
+import QueryContext from "../context/query/context";
 
 import { Card } from "../components/layout/card";
 import SearchInput from "../components/layout/input/search";
@@ -15,6 +17,7 @@ const LOAD_MORE_STEP = 9;
 
 const HomePage = () => {
   const [query, setQuery] = useState("");
+  const { set: setQueryTerm, term: queryTerm } = useContext(QueryContext);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [contentChanged, setContentChanged] = useState(false);
   const [searchedArtist, setSearchedArtist] = useState(query);
@@ -42,7 +45,13 @@ const HomePage = () => {
   const loadMore = () => { 
     if (data?.search?.artists?.pageInfo.hasNextPage && !isLoadingMore) {
       setIsLoadingMore(true);
-      fetchMore({ variables: { amount: LOAD_MORE_STEP, lastItemCursor: data?.search?.artists?.pageInfo.endCursor } });
+      fetchMore({ 
+        variables: { 
+          searchedArtist : searchedArtist || queryTerm, 
+          amount: LOAD_MORE_STEP, 
+          lastItemCursor: data?.search?.artists?.pageInfo.endCursor 
+        } 
+      });
     }
   };
 
@@ -54,8 +63,8 @@ const HomePage = () => {
 
   useEffect(() => {
     if (searchedArtist) {
-      // console.log("search changed", contentChanged);
       setContentChanged(true);
+      setQueryTerm(searchedArtist);
       refetch({
         searchedArtist,
         amount: LOAD_MORE_STEP,
@@ -65,20 +74,27 @@ const HomePage = () => {
   }, [searchedArtist]);
 
   useEffect(() => {
-    // if (!loading && data) {
-      // console.log("data changed", contentChanged);
-      setIsLoadingMore(false);
-      // setContentChanged(false);
-    // }
-  }, [loading, data]);
+    setIsLoadingMore(false);
+  }, [data]);
+
+  useEffect(() => {
+    setContentChanged(false);
+  }, [data?.search?.artists?.__typename]);
 
   // if (error) return <p>Error :(</p>;
 
   return (
     <>
-      <SearchInput type="text" onChange={handleQueryChanged} value={query} clearInput={clearInput} placeholder="Search an artist..." />
+      <SearchInput 
+        type="text" 
+        onChange={handleQueryChanged} 
+        value={query} 
+        clearInput={clearInput} 
+        placeholder="Search an artist..."
+        disabled={loading || contentChanged}
+      />
       {
-        loading ? (
+        loading || contentChanged ? (
           <Loading />
         ) : (
           <InfiniteScroll loadMore={loadMore} isLoadingMore={isLoadingMore} contentChanged={contentChanged}>

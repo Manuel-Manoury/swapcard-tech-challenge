@@ -6,6 +6,10 @@ const Input = styled.input`
   border-radius: 4px;
   padding: 8px 16px;
   font-size: 1.2rem;
+
+  &:disabled {
+    background-color: #BDBDBD;
+  }
 `;
 
 export default Input;
