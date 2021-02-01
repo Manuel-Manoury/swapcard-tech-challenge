@@ -61,7 +61,7 @@ const ArtistHeader : React.FC<ArtistHeaderType> = ({ name, disambiguation, start
             {name}
           </h2>
           <div onClick={handleFavoriteClick}>
-            <Star color={isFavorite ? '#ffc107' : '#CCCCCC'} />
+            <Star color={isFavorite ? "#ffc107" : "#CCCCCC"} />
           </div>
         </NameWrapper>
         <i>

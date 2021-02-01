@@ -29,7 +29,7 @@ const InfiniteScroll : React.FC<InfiniteScrollType> = ({ children, loadMore, isL
       window.requestAnimationFrame(() => {
         if (cardContainer.current === null) return;
         
-        cardContainer.current.removeEventListener('scroll', handleScroll);
+        cardContainer.current.removeEventListener("scroll", handleScroll);
         loadMore();
       });
     }
@@ -37,19 +37,19 @@ const InfiniteScroll : React.FC<InfiniteScrollType> = ({ children, loadMore, isL
 
   useEffect(() => {
     if (children && cardContainer.current) {
-      cardContainer.current.addEventListener('scroll', handleScroll);
+      cardContainer.current.addEventListener("scroll", handleScroll);
     }
 
     return () => {
       if (cardContainer.current) {
-        cardContainer.current.removeEventListener('scroll', handleScroll);
+        cardContainer.current.removeEventListener("scroll", handleScroll);
       }
     }
   }, [children]);
 
   // useEffect(() => {
   //   if (!previousChildren.current || children.length <= previousChildren.current.length ) {
-  //     console.log('content changed, should scroll')
+  //     console.log("content changed, should scroll")
   //     previousChildren.current = children;
   //     cardContainer.current.scrollTop = 0;
   //   }

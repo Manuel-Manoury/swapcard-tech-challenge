@@ -32,7 +32,7 @@ const HomePage = () => {
   );
 
   const clearInput = () => {
-    setQuery('');
+    setQuery("");
   }
 
   const handleQueryChanged = (e : any) => {
@@ -54,7 +54,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (searchedArtist) {
-      // console.log('search changed', contentChanged);
+      // console.log("search changed", contentChanged);
       setContentChanged(true);
       refetch({
         searchedArtist,
@@ -66,7 +66,7 @@ const HomePage = () => {
 
   useEffect(() => {
     // if (!loading && data) {
-      // console.log('data changed', contentChanged);
+      // console.log("data changed", contentChanged);
       setIsLoadingMore(false);
       // setContentChanged(false);
     // }

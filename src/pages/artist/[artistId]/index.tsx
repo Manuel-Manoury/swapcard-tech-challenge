@@ -66,7 +66,7 @@ const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
         isFavorite={isFavorite()}
       />
       <ArtistSection title="Abstract">
-        <p style={{ padding: '0 16px' }}>
+        <p style={{ padding: "0 16px" }}>
           {data?.lookup?.artist?.discogs?.profile}
         </p>
       </ArtistSection>

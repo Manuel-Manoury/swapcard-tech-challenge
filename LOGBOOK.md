@@ -38,3 +38,7 @@ I also start to clean up my mess a bit, split components in smaller units and st
 I added some finishing touches using Next.js `<Head>` API to make my app more like and app, and less like a local dev test.
 I tweak the overall UI to have a somewhat responsive app.
 I set TypeScript to `strict` in order to help me spot the missing types and improve my code quality.
+
+# 01-02-2021 - Day 6
+It's nearing the end of the test, today should be about the finishing touches to my app more than anything else. It's not perfect, and won't ever be, but I must ship something clean.
+I have implemented the actual infinite scroll, as well as a cleaner "loading" message. I still have some UI/UX issues, but we're getting there.

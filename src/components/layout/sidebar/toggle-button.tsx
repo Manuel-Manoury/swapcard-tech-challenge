@@ -11,7 +11,7 @@ const MenuIcon = styled.span`
   &:before,
   &:after {
     position: absolute;
-    content: ' ';
+    content: " ";
     top: 50%;
     left: 50%;
     display: block;
@@ -73,7 +73,7 @@ const ToggleButton : React.FC<ToggleButtonType> = ({ setMenuDisplayed, menuDispl
 
   return (
     <MobileButton onClick={handleClick}>
-      <MenuIcon className={menuDisplayed ? 'open' : ''} />
+      <MenuIcon className={menuDisplayed ? "open" : ""} />
     </MobileButton>
   );
 };

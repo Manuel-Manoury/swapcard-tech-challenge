@@ -1,2 +1,2 @@
-export { default as ArtistHeader } from './header';
-export { default as ArtistSection } from './section';
+export { default as ArtistHeader } from "./header";
+export { default as ArtistSection } from "./section";
