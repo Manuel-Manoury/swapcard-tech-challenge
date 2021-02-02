@@ -1,8 +1,25 @@
-# swapcard-tech-challenge
+# Swapcard tech challenge
+Test realized between the 26th of January 2021 and the 3rd of February 2021
+
+
+## Technologies / tools used
+
+- [React](https://www.npmjs.com/package/react)
+- [TypeScript](https://www.npmjs.com/package/typescript)
+- [Next](https://www.npmjs.com/package/next)
+- [Apollo JS client](https://www.npmjs.com/package/@apollo/client)
+- [Styled components](https://www.npmjs.com/package/styled-components)
+
+
+## Build / run
+
+`yarn install && yarn dev`
 
 Online version : https://agitated-wright-72c6ef.netlify.app/
 
-# What could be improved ?
+
+## What could be improved ?
+
 **The UI**. It's a bit cold even though I went for something clean, the fact that I tend to use pure "mathematical" color shades instead of tinted ones tend to make the whole interface less warm and welcoming than what I could be. Also some animation might use a bit of tweaking to make them smoother.
 
 **Images**. I didn't optimize their sizing / loading, consequently some are a bit long to load, some are a bit stretched and so on.
@@ -32,3 +49,5 @@ query GetRecords($releaseGroupMBID: MBID!, $amount: Int!, $lastItemCursor: Strin
 With such a query, I end up facing the `The given parameters do not match any available query type for the release resource.` error message, even though I can't understand why it doesn't work, considering it seems to be working fine on the MusicBrainz website.
 
 **Error messages**. I didn't use the error provided by Apollo, and that's clearly taking a risk from both an application and a UX perspective.
+
+**Testing**. Testing is an important part of development. Sadly I'm still learning regarding this, and I didn't have much time to implement useful tests for this little app.

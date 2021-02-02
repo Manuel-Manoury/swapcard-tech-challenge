@@ -1,5 +1,20 @@
 import { gql } from "@apollo/client";
 
+type MediaWikiImage = {
+  url: string;
+};
+
+type ArtistType = {
+  name: string;
+  mbid: string;
+  id: string;
+  mediaWikiImages: Array<MediaWikiImage>;
+};
+
+export type ArtistNodeType = {
+  node: ArtistType;
+};
+
 export const GET_ARTISTS = gql`
   query GetArtist($searchedArtist: String!, $amount: Int!, $lastItemCursor: String!) {
     search {
@@ -23,6 +38,19 @@ export const GET_ARTISTS = gql`
     }
   }
 `;
+
+type ReleaseCoverType = {
+  front: string;
+};
+
+export type ReleaseGroupType = {
+  title: string;
+  id: string;
+  mbid: string;
+  primaryType: string;
+  coverArtArchive: ReleaseCoverType;
+};
+
 
 export const GET_ARTIST_DETAILS = gql`
   query GetArtistDetails($searchedArtistId: MBID!) {

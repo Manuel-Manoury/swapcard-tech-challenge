@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 
+import { Colors, Spacing } from "../../styles/variables";
+
 import { Sort } from "../icons";
 import { Horizontal } from "../layout/container";
 
@@ -10,14 +12,14 @@ const SectionTitleContainer = styled(Horizontal)`
   
   svg {
     position: absolute;
-    right: 16px;
+    right: ${Spacing.m}px;
   }
 `;
 
 const SectionTitle = styled.h2`
-  background-color: #CCCCCC;
-  padding: 4px 16px;
-  margin: 0;
+  background-color: ${Colors.darkgrey};
+  padding: ${Spacing.xs}px ${Spacing.m}px;
+  margin: ${Spacing.none};
   width: 100%;
 
   &:hover {
@@ -32,14 +34,14 @@ type SectionContentType = {
 const SectionContent = styled.div<SectionContentType>`
   max-height: 1000%;
   transition: 500ms max-height ease-in-out;
-  margin-bottom: 16px;
-  border: 1px solid #CCCCCC;
+  margin-bottom: ${Spacing.m}px;
+  border: 1px solid ${Colors.darkgrey};
   flex-shrink: 0;
 
   ${({ isCollapsed }) => isCollapsed && css`
     overflow: hidden;
-    max-height: 0;
-    padding: 0;
+    max-height: ${Spacing.none};
+    padding: ${Spacing.none};
   `};
 `;
 

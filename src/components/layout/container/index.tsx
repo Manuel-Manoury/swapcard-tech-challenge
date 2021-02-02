@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
+import { Breakpoints, CONTENT_MAX_WIDTH, Spacing } from "../../../styles/variables";
+
 export const ContentContainer = styled.div`
-  max-width: 1200px;
+  max-width: ${CONTENT_MAX_WIDTH}px;
   width: 100%;
   margin: auto;
-  padding: 16px 32px;
+  padding: ${Spacing.m}px ${Spacing.xl}px;
 
-  @media (max-width: 767px) {
-    padding: 16px 20px;
+  @media (max-width: ${Breakpoints.mobileMaxWidth}px) {
+    padding: ${Spacing.m}px ${2.5 * Spacing.s}px;
     height: 100%;
   }
 `;

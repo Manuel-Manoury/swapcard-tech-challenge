@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { CARD_PICTURE_SIZE } from "../../../styles/variables";
+import { BorderRadius, Breakpoints, CARD_PICTURE_SIZE, Colors, Spacing } from "../../../styles/variables";
 
 import { Horizontal, Vertical } from "../container";
 
@@ -8,9 +8,9 @@ const FrontImg = styled.img`
   z-index: 2;
   width: ${CARD_PICTURE_SIZE}px;
   height: ${CARD_PICTURE_SIZE}px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background-color: #CCCCCC;
+  border-top-left-radius: ${BorderRadius.card}px;
+  border-top-right-radius: ${BorderRadius.card}px;
+  background-color: ${Colors.darkgrey};
 `;
 
 const BlurredImg = styled.img`
@@ -25,14 +25,14 @@ const BlurredImg = styled.img`
 `;
 
 const TitleContainer = styled.div`
-  background-color: white;
+  background-color: ${Colors.white};
   z-index: 2;
-  padding: 8px 16px;
-  border-left: 1px solid silver;
-  border-right: 1px solid silver;
-  border-bottom: 1px solid silver;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  padding: ${Spacing.s}px ${Spacing.m}px;
+  border-left: 1px solid ${Colors.darkgrey};
+  border-right: 1px solid ${Colors.darkgrey};
+  border-bottom: 1px solid ${Colors.darkgrey};
+  border-bottom-left-radius: ${BorderRadius.card}px;
+  border-bottom-right-radius: ${BorderRadius.card}px;
   transition: box-shadow 500ms ease-in-out;
 `;
 
@@ -41,8 +41,8 @@ const StyledCard = styled(Vertical)`
   flex-shrink: 0;
   width: ${CARD_PICTURE_SIZE}px;
   position: relative;
-  margin: 16px;
-  border-radius: 8px;
+  margin: ${Spacing.m}px;
+  border-radius: ${BorderRadius.card}px;
 
   ${({ onClick }) => onClick && css`
     &:hover {
@@ -53,7 +53,7 @@ const StyledCard = styled(Vertical)`
       }
 
       ${TitleContainer} {
-        box-shadow: 0px 8px 25px 0px rgba(200,200,200,0.75);
+        box-shadow: 0px 8px 25px 0px rgba(200, 200, 200, 0.75);
       }
     }
   `};
@@ -65,17 +65,15 @@ type CardType = {
   onClick?: (event : React.MouseEvent<HTMLDivElement | MouseEvent>) => void;
 };
 
-export const Card : React.FC<CardType> = ({ title, imgSrc, onClick = undefined }) => {
-  return (
-    <StyledCard onClick={onClick}>
-      <BlurredImg src={imgSrc} />
-      <FrontImg src={imgSrc} />
-      <TitleContainer>
-        {title}
-      </TitleContainer>
-    </StyledCard>
-  );
-};
+export const Card : React.FC<CardType> = ({ title, imgSrc, onClick = undefined }) => (
+  <StyledCard onClick={onClick}>
+    <BlurredImg src={imgSrc} />
+    <FrontImg src={imgSrc} />
+    <TitleContainer>
+      {title}
+    </TitleContainer>
+  </StyledCard>
+);
 
 type CardListType = {
   narrow?: boolean;
@@ -83,19 +81,19 @@ type CardListType = {
 
 export const CardList = styled(Horizontal)<CardListType>`
   flex-wrap: wrap;
-  margin: 0 -32px;
-  padding: 24px;
+  margin: ${Spacing.none} ${-1 * Spacing.xl}px;
+  padding: ${Spacing.l}px;
   height: 100%;
   overflow: auto;
 
   ${({ narrow }) => narrow && css`
-    margin: -4px;
-    padding: 0;
+    margin: ${-1 * Spacing.xs}px;
+    padding: ${Spacing.none};
     overflow: unset;
   `};
 
-  @media (max-width: 767px) {
-    padding: 0;
-    margin: 0 -16px;
+  @media (max-width: ${Breakpoints.mobileMaxWidth}px) {
+    padding: ${Spacing.none};
+    margin: ${Spacing.none} ${-1.5 * Spacing.s}px;
   }
 `;

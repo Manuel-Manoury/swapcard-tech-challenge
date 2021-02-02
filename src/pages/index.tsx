@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { CARD_PICTURE_SIZE } from "../styles/variables";
 
-import { GET_ARTISTS } from "../api/MusicBrainzQueries";
+import { ArtistNodeType, GET_ARTISTS } from "../api/MusicBrainzQueries";
 
 import QueryContext from "../context/query/context";
 
@@ -14,15 +14,16 @@ import Loading from "../components/layout/loading";
 import InfiniteScroll from "../components/layout/infinite-scroll";
 
 const LOAD_MORE_STEP = 9;
+const QUERY_DEBOUNCE_TIME = 750;
 
 const HomePage = () => {
   const [query, setQuery] = useState("");
   const { set: setQueryTerm, term: queryTerm } = useContext(QueryContext);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [contentChanged, setContentChanged] = useState(false);
+  const [contentChanging, setContentChanging] = useState(false);
   const [searchedArtist, setSearchedArtist] = useState(query);
   const router = useRouter();
-  const { loading, error, data, fetchMore, refetch } = useQuery(
+  const { loading, data, fetchMore, refetch } = useQuery(
     GET_ARTISTS, 
     {
       variables:
@@ -36,9 +37,10 @@ const HomePage = () => {
 
   const clearInput = () => {
     setQuery("");
+    setQueryTerm("");
   }
 
-  const handleQueryChanged = (e : any) => {
+  const handleQueryChanged = (e : React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
@@ -56,14 +58,14 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    let updateSearchArtistTimeout = setTimeout(() => setSearchedArtist(query), 500);
+    let updateSearchArtistTimeout = setTimeout(() => setSearchedArtist(query), QUERY_DEBOUNCE_TIME);
 
     return () => clearTimeout(updateSearchArtistTimeout);
   }, [query]);
 
   useEffect(() => {
     if (searchedArtist) {
-      setContentChanged(true);
+      setContentChanging(true);
       setQueryTerm(searchedArtist);
       refetch({
         searchedArtist,
@@ -78,28 +80,26 @@ const HomePage = () => {
   }, [data]);
 
   useEffect(() => {
-    setContentChanged(false);
+    setContentChanging(false);
   }, [data?.search?.artists?.__typename]);
-
-  // if (error) return <p>Error :(</p>;
 
   return (
     <>
       <SearchInput 
         type="text" 
         onChange={handleQueryChanged} 
-        value={query} 
+        value={query || queryTerm}
         clearInput={clearInput} 
         placeholder="Search an artist..."
-        disabled={loading || contentChanged}
+        disabled={loading || contentChanging}
       />
       {
-        loading || contentChanged ? (
+        loading || contentChanging ? (
           <Loading />
         ) : (
-          <InfiniteScroll loadMore={loadMore} isLoadingMore={isLoadingMore} contentChanged={contentChanged}>
-            {data?.search?.artists?.edges?.map(({ node } : any) => {
-              const handleClick = (e: any) => {
+          <InfiniteScroll loadMore={loadMore} isLoadingMore={isLoadingMore}>
+            {data?.search?.artists?.edges?.map(({ node } : ArtistNodeType) => {
+              const handleClick = (e: React.MouseEvent<HTMLDivElement | MouseEvent>) => {
                 e.preventDefault();
                 router.push(`/artist/${node.mbid}`);
               };

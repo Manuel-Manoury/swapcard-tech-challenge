@@ -4,21 +4,23 @@ import styled from "styled-components";
 
 import FavoritesContext from "../../context/favorites/context";
 
+import { BorderRadius, Colors, Spacing } from "../../styles/variables";
+
 import { Vertical } from "../layout/container";
 
 const FavoritesContainer = styled(Vertical)`
   max-height: 100%;
 
   h3 {
-    margin: 0;
+    margin: ${Spacing.none};
     text-align: center;
   }
 
   hr {
     border: none;
-    border-bottom: 1px solid #212121;
+    border-bottom: 1px solid ${Colors.blackish};
     width: 80%;
-    margin: 16px auto;
+    margin: ${Spacing.m}px auto;
   }
 `;
 
@@ -27,25 +29,29 @@ const FavoriteItemsContainer = styled(Vertical)`
 `;
 
 const FavoriteItem = styled.div`
-  padding: 4px 16px;
-  border-radius: 4px;
+  padding: ${Spacing.xs}px ${Spacing.m}px;
+  border-radius: ${BorderRadius.button}px;
   transition: background-color 500ms ease-in-out, color 500ms ease-in-out;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 
   &:hover {
-    background-color: #212121;
-    color: #F2F2F2;
+    background-color: ${Colors.blackish};
+    color: ${Colors.whitish};
     cursor: pointer;
   }
 
   & + & {
-    margin-top: 8px;
+    margin-top: ${Spacing.s}px;
   }
 `;
 
-const Favorites = () => {
+type FavoriteType = {
+  closeMenuDisplay: () => void;
+};
+
+const Favorites : React.FC<FavoriteType> = ({ closeMenuDisplay }) => {
   const { data } = useContext(FavoritesContext);
   const router = useRouter();
 
@@ -60,6 +66,7 @@ const Favorites = () => {
           data?.map(({ name, id }) => {
             const handleClick = () => {
               router.push(`/artist/${id}`);
+              closeMenuDisplay();
             };
 
             return (

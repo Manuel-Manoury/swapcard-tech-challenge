@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
+import { Breakpoints, Colors, Spacing } from "../../../styles/variables";
+
 const MenuIcon = styled.span`
   height: 2px;
   width: 100%;
-  background-color: #F2F2F2;
+  background-color: ${Colors.whitish};
   border-radius: 2px;
   position: relative;
   display: block;
@@ -17,7 +19,7 @@ const MenuIcon = styled.span`
     display: block;
     width: 100%;
     height: 2px;
-    background-color: #F2F2F2;
+    background-color: ${Colors.whitish};
     border-radius: 2px;
     transition: 0.5s background-color ease-in-out;
   }
@@ -55,10 +57,10 @@ const MobileButton = styled.button`
   justify-content: center;
   height: 40px;
   width: 40px;
-  padding: 6px;
-  margin-right: 16px;
+  padding: ${Spacing.s}px;
+  margin-right: ${Spacing.m}px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${Breakpoints.tabletMinWidth}px) {
     display: none;
   }
 `;

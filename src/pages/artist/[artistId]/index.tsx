@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 import FavoritesContext from "../../../context/favorites/context";
 
-import { CARD_PICTURE_SIZE } from "../../../styles/variables";
+import { CARD_PICTURE_SIZE, Spacing } from "../../../styles/variables";
 
-import { GET_ARTIST_DETAILS } from "../../../api/MusicBrainzQueries";
+import { GET_ARTIST_DETAILS, ReleaseGroupType } from "../../../api/MusicBrainzQueries";
 
 import { ArtistHeader, ArtistSection } from "../../../components/artists";
 import { Card, CardList } from "../../../components/layout/card";
@@ -24,7 +24,7 @@ type ArtistPageType = {
 };
 
 const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
-  const { loading, error, data } = useQuery(GET_ARTIST_DETAILS, { variables: { searchedArtistId: artistId } });
+  const { loading, data } = useQuery(GET_ARTIST_DETAILS, { variables: { searchedArtistId: artistId } });
   const { data: favoriteData, add : addFavorite, remove: removeFavorite } = useContext(FavoritesContext);
 
   const isFavorite = () => {
@@ -45,7 +45,6 @@ const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
   };
 
   if (loading) return <Loading />;
-  // if (error) return <p>Error :(</p>;
 
   return (
     <PageContainer>
@@ -66,24 +65,22 @@ const ArtistPage : React.FC<ArtistPageType> = ({ artistId }) => {
         isFavorite={isFavorite()}
       />
       <ArtistSection title="Abstract">
-        <p style={{ padding: "0 16px" }}>
+        <p style={{ padding: `${Spacing.none} ${Spacing.m}px` }}>
           {data?.lookup?.artist?.discogs?.profile || <i>No data found</i>}
         </p>
       </ArtistSection>
       <ArtistSection title="Records">
         <CardList narrow>
           {data?.lookup?.artist?.releaseGroups?.nodes?.length ? (
-            data?.lookup?.artist?.releaseGroups?.nodes?.map((node : any) => { 
-              return (
-                <Card
-                  title={node.title}
-                  key={node.id}
-                  imgSrc={node.coverArtArchive.front || `https://picsum.photos/seed/${node.mbid}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`}
-                />
-              )
-            })
+            data?.lookup?.artist?.releaseGroups?.nodes?.map((node : ReleaseGroupType) => (
+              <Card
+                title={node.title}
+                key={node.id}
+                imgSrc={node.coverArtArchive.front || `https://picsum.photos/seed/${node.mbid}/${CARD_PICTURE_SIZE}/${CARD_PICTURE_SIZE}`}
+              />
+            ))
           ) : (
-            <i style={{ padding: "20px" }}>No data found</i>
+            <i style={{ padding: `${2.5 * Spacing.s}px` }}>No data found</i>
           )}
         </CardList>
       </ArtistSection>

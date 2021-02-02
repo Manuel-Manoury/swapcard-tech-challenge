@@ -1,16 +1,20 @@
 import styled from "styled-components";
 
+import { Colors } from "../../../styles/variables";
+
 import { ContentContainer } from "../container";
 
+export const HEADER_HEIGHT = 80;
+
 const Header = styled.header`
-  background-color: #212121;
-  height: 80px;
-  min-height: 80px;
+  background-color: ${Colors.blackish};
+  height: ${HEADER_HEIGHT}px;
+  min-height: ${HEADER_HEIGHT}px;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 800;
 
   a {
-    color: #F2F2F2;
+    color: ${Colors.whitish};
     text-decoration: none;
   }
 
@@ -21,14 +25,12 @@ const Header = styled.header`
   }
 `;
 
-const StyledHeader : React.FC<{}> = ({ children }) => {
-  return (
-    <Header>
-      <ContentContainer>
-        {children}
-      </ContentContainer>
-    </Header>
-  );
-};
+const StyledHeader : React.FC<{}> = ({ children }) => (
+  <Header>
+    <ContentContainer>
+      {children}
+    </ContentContainer>
+  </Header>
+);
 
 export default StyledHeader;

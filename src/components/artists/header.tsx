@@ -1,22 +1,22 @@
 import styled from "styled-components";
 
-import { CARD_PICTURE_SIZE } from "../../styles/variables";
+import { BorderRadius, Breakpoints, CARD_PICTURE_SIZE, Colors, Spacing } from "../../styles/variables";
 
 import { Star } from "../icons";
 import { Horizontal, Vertical } from "../layout/container";
 import Rating from "../layout/rating";
 
 const ArtistHeaderContainer = styled(Horizontal)`
-  margin-bottom: 32px;
+  margin-bottom: ${Spacing.xl}px;
 
   img {
     width: ${CARD_PICTURE_SIZE}px;
     height: ${CARD_PICTURE_SIZE}px;
-    border-radius: 8px;
-    margin-right: 32px;
+    border-radius: ${BorderRadius.card}px;
+    margin-right: ${Spacing.xl}px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${Breakpoints.mobileMaxWidth}px) {
     flex-direction: column;
   }
 `;
@@ -26,7 +26,7 @@ const NameWrapper = styled(Horizontal)`
 
   & > div {
     height: 100%;
-    margin-left: 16px;
+    margin-left: ${Spacing.m}px;
     display: flex;
 
     &:hover {
@@ -48,32 +48,30 @@ type ArtistHeaderType = {
   voteCount: number;
   imgSrc: string;
   isFavorite: boolean;
-  handleFavoriteClick: (item : any) => void;
+  handleFavoriteClick: (item : React.MouseEvent<HTMLDivElement>) => void;
 };
 
-const ArtistHeader : React.FC<ArtistHeaderType> = ({ name, disambiguation, start, end, rate, voteCount, imgSrc, handleFavoriteClick, isFavorite }) => {
-  return (
-    <ArtistHeaderContainer>
-      <img src={imgSrc} />
-      <Vertical>
-        <NameWrapper>
-          <h2>
-            {name}
-          </h2>
-          <div onClick={handleFavoriteClick}>
-            <Star color={isFavorite ? "#ffc107" : "#CCCCCC"} />
-          </div>
-        </NameWrapper>
-        <i>
-          {disambiguation}
-        </i>
-        <p>
-          {start} - {end}
-        </p>
-        <Rating rate={rate} voteCount={voteCount} />
-      </Vertical>
-    </ArtistHeaderContainer>
-  );
-};
+const ArtistHeader : React.FC<ArtistHeaderType> = ({ name, disambiguation, start, end, rate, voteCount, imgSrc, handleFavoriteClick, isFavorite }) => (
+  <ArtistHeaderContainer>
+    <img src={imgSrc} />
+    <Vertical>
+      <NameWrapper>
+        <h2>
+          {name}
+        </h2>
+        <div onClick={handleFavoriteClick}>
+          <Star color={isFavorite ? Colors.yellow : Colors.darkgrey} />
+        </div>
+      </NameWrapper>
+      <i>
+        {disambiguation}
+      </i>
+      <p>
+        {start} - {end}
+      </p>
+      <Rating rate={rate} voteCount={voteCount} />
+    </Vertical>
+  </ArtistHeaderContainer>
+);
 
 export default ArtistHeader;

@@ -1,5 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
+import { Colors, Spacing } from "../../../styles/variables";
+
 import { Vertical } from "../container";
 
 const LoadingRing = keyframes`
@@ -30,11 +32,11 @@ const Loader = styled.div`
     position: absolute;
     width: 64px;
     height: 64px;
-    margin: 8px;
-    border: 8px solid #CCCCCC;
+    margin: ${Spacing.s}px;
+    border: 8px solid ${Colors.darkgrey};
     border-radius: 50%;
     animation: ${LoadingRing} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #CCCCCC transparent transparent transparent;
+    border-color: ${Colors.darkgrey} transparent transparent transparent;
 
     &:nth-child(1) {
       animation-delay: -0.45s;
@@ -48,25 +50,21 @@ const Loader = styled.div`
   }
 `;
 
-export const Spinner = () => {
-  return (
-    <Loader>
-      <div />
-      <div />
-      <div />
-    </Loader>
-  );
-};
+export const Spinner = () => (
+  <Loader>
+    <div />
+    <div />
+    <div />
+  </Loader>
+);
 
-const Loading = () => {
-  return (
-    <LoadingContainer>
-      <Spinner />
-      <h2>
-        Loading...
-      </h2>
-    </LoadingContainer>
-  );
-};
+const Loading = () => (
+  <LoadingContainer>
+    <Spinner />
+    <h2>
+      Loading...
+    </h2>
+  </LoadingContainer>
+);
 
 export default Loading;

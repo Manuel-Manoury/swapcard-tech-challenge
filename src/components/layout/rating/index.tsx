@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import { Colors, Spacing } from '../../../styles/variables'; 
+
 import { Star } from "../../icons";
 import { Horizontal, Vertical } from "../container";
 
-const STAR_SPACING = 4;
+const STAR_SPACING = Spacing.xs;
+const STAR_SIZE = Spacing.l;
 
 type StarsContainerType = {
-  starSize: number;
   rate?: number;
 };
 
 const StarsContainer = styled(Horizontal)<StarsContainerType>`
   z-index: 1;
-  max-width: ${({ starSize }) => 5 * starSize + 4 * STAR_SPACING}px;
+  max-width: ${5 * STAR_SIZE + 4 * STAR_SPACING}px;
 
   &:not(:first-child) {
     z-index: 2;
@@ -21,7 +23,7 @@ const StarsContainer = styled(Horizontal)<StarsContainerType>`
     top: 0;
     transition: 500ms max-width ease-in-out;
     overflow: hidden;
-    max-width: ${({ rate, starSize }) => rate ? `${rate * 5 * starSize + 4 * STAR_SPACING}px` : 0};
+    max-width: ${({ rate }) => rate ? `${rate * 5 * STAR_SIZE + 4 * STAR_SPACING}px` : 0};
   }
 
   svg {
@@ -35,16 +37,15 @@ const StarsContainer = styled(Horizontal)<StarsContainerType>`
 
 const RatingContainer = styled(Vertical)`
   position: relative;
-  margin: 8px 0;
+  margin: ${Spacing.s}px ${Spacing.none};
 `;
 
 type RatingType = {
   rate: number;
-  starSize?: number;
   voteCount: number;
 };
 
-const Rating : React.FC<RatingType> = ({ rate, starSize = 24, voteCount }) => {
+const Rating : React.FC<RatingType> = ({ rate, voteCount }) => {
   const [currentRate, setCurrentRate] = useState(0);
 
   useEffect(() => {
@@ -53,19 +54,19 @@ const Rating : React.FC<RatingType> = ({ rate, starSize = 24, voteCount }) => {
 
   return (
     <RatingContainer>
-      <StarsContainer starSize={starSize}>
-        <Star color="#CCCCCC" size={starSize} />
-        <Star color="#CCCCCC" size={starSize} />
-        <Star color="#CCCCCC" size={starSize} />
-        <Star color="#CCCCCC" size={starSize} />
-        <Star color="#CCCCCC" size={starSize} />
+      <StarsContainer >
+        <Star color={Colors.darkgrey} />
+        <Star color={Colors.darkgrey} />
+        <Star color={Colors.darkgrey} />
+        <Star color={Colors.darkgrey} />
+        <Star color={Colors.darkgrey} />
       </StarsContainer>
-      <StarsContainer rate={currentRate} starSize={starSize}>
-        <Star size={starSize} />
-        <Star size={starSize} />
-        <Star size={starSize} />
-        <Star size={starSize} />
-        <Star size={starSize} />
+      <StarsContainer rate={currentRate}>
+        <Star />
+        <Star />
+        <Star />
+        <Star />
+        <Star />
       </StarsContainer>
       <small>
         {rate} / 5 ({voteCount} votes)

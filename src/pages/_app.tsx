@@ -24,6 +24,8 @@ type LayoutType = {
 const Layout : React.FC<LayoutType> = ({ Component, pageProps }) => {
   const [menuDisplayed, setMenuDisplayed] = useState(false);
 
+  const closeMenuDisplay = () => setMenuDisplayed(false);
+
   return (
     <ApolloProvider client={MusicBrainzClient}>
       <QueryProvider>
@@ -41,7 +43,7 @@ const Layout : React.FC<LayoutType> = ({ Component, pageProps }) => {
           <PageLayout>
             <PageContainer>
               <Sidebar shown={menuDisplayed}>
-                <Favorites />
+                <Favorites closeMenuDisplay={closeMenuDisplay} />
               </Sidebar>
               <PageContent>
                 <Component {...pageProps} />

@@ -10,13 +10,14 @@ const SpinnerContainer = styled(Horizontal)`
   width: 100%;
 `;
 
+const SCROLL_FACTOR_FOR_LOADMORE = 0.3;
+
 type InfiniteScrollType = {
   loadMore: () => void;
   isLoadingMore: boolean;
-  contentChanged: boolean;
 };
 
-const InfiniteScroll : React.FC<InfiniteScrollType> = ({ children, loadMore, isLoadingMore, contentChanged }) => {
+const InfiniteScroll : React.FC<InfiniteScrollType> = ({ children, loadMore, isLoadingMore }) => {
   const cardContainer = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
@@ -25,7 +26,7 @@ const InfiniteScroll : React.FC<InfiniteScrollType> = ({ children, loadMore, isL
     const currentScroll = cardContainer.current.scrollTop;
     const maxScrollHeight = cardContainer.current.scrollHeight;
 
-    if (currentScroll >= maxScrollHeight / 4) {
+    if (currentScroll >= maxScrollHeight * SCROLL_FACTOR_FOR_LOADMORE) {
       window.requestAnimationFrame(() => {
         if (cardContainer.current === null) return;
         
@@ -46,14 +47,6 @@ const InfiniteScroll : React.FC<InfiniteScrollType> = ({ children, loadMore, isL
       }
     }
   }, [children]);
-
-  // useEffect(() => {
-  //   if (!previousChildren.current || children.length <= previousChildren.current.length ) {
-  //     console.log("content changed, should scroll")
-  //     previousChildren.current = children;
-  //     cardContainer.current.scrollTop = 0;
-  //   }
-  // }, [children]);
 
   return (
     <CardList ref={cardContainer}>
